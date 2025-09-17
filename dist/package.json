@@ -1,0 +1,29 @@
+{
+  "name": "giro",
+  "version": "1.0.0",
+  "description": "agile manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "../node_modules/.bin/tsc",
+    "build:watch": "../node_modules/.bin/tsc --watch",
+    "serve": "../src/node_modules/.bin/http-server -p 8080 -o",
+    "dev": "npm run build & npm run serve",
+    "start": "npm run build && npm run serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jensilva/giro.git"
+  },
+  "author": "Jenn Silva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jensilva/giro/issues"
+  },
+  "homepage": "https://github.com/jensilva/giro#readme",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2",
+    "http-server": "^14.1.1"
+  }
+}
