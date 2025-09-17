@@ -1,39 +1,62 @@
-import { formatMessage } from './utils.js';
+import { User, showAlert } from './utils.js';
 
-interface User {
-    name: string;
-    age: number;
-}
-
-class App {
-    private button: HTMLButtonElement;
-    private output: HTMLDivElement;
+class BootstrapApp {
+    private mainButton: HTMLButtonElement;
+    private alertContainer: HTMLDivElement;
 
     constructor() {
-        this.button = document.getElementById('btn') as HTMLButtonElement;
-        this.output = document.getElementById('output') as HTMLDivElement;
+        this.mainButton = document.getElementById('mainBtn') as HTMLButtonElement;
+        this.alertContainer = document.getElementById('alertContainer') as HTMLDivElement;
 
         this.init();
     }
 
     private init(): void {
-        this.button.addEventListener('click', () => this.handleClick());
+        this.mainButton.addEventListener('click', () => this.handleButtonClick());
+
+        // Exemplo de modal (se quiser usar programaticamente)
+        this.showWelcomeModal();
     }
 
-    private handleClick(): void {
+    private handleButtonClick(): void {
         const user: User = {
-            name: 'João',
-            age: 30
+            name: 'João Silva',
+            age: 30,
+            email: 'joao@email.com'
         };
 
-        const message = formatMessage(user);
-        this.output.innerHTML = message;
+        // Mostrar alerta do Bootstrap
+        showAlert(`Olá, ${user.name}!`, 'success', this.alertContainer);
 
-        console.log('Botão clicado!', user);
+        // Mudar aparência do botão
+        this.mainButton.textContent = 'Clicado!';
+        this.mainButton.classList.remove('btn-light');
+        this.mainButton.classList.add('btn-success');
+
+        // Disable button temporarily
+        this.mainButton.disabled = true;
+        setTimeout(() => {
+            this.mainButton.disabled = false;
+            this.mainButton.classList.remove('btn-success');
+            this.mainButton.classList.add('btn-light');
+            this.mainButton.textContent = 'Clique aqui novamente';
+        }, 2000);
+    }
+
+    private showWelcomeModal(): void {
+        // Você pode criar modais programaticamente se necessário
+        console.log('App inicializado com Bootstrap!');
     }
 }
 
-// Inicializar a aplicação quando o DOM estiver carregado
+// Inicializar quando o DOM estiver pronto
 document.addEventListener('DOMContentLoaded', () => {
-    new App();
+    new BootstrapApp();
 });
+
+// Adicionar tipos para Bootstrap se necessário
+declare global {
+    interface Window {
+        bootstrap: any;
+    }
+}

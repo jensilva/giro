@@ -5,5 +5,12 @@
     "serve": "http-server -p 8080 -o",
     "dev": "npm run build:watch & npm run serve",
     "start": "npm run build && npm run serve"
+  },
+  "dependencies": {
+    "@types/bootstrap": "^5.2.10",
+    "bootstrap": "^5.3.8"
+  },
+  "devDependencies": {
+    "@popperjs/core": "^2.11.8"
   }
 }

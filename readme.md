@@ -20,6 +20,7 @@ npm install
 2. **Inicie o servidor mock dos dados**
 ```bash
 npx http-server
+npx json-server db.json --watch
 ```
 
 ### Inicie o servidor FE
