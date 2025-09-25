@@ -1,0 +1,126 @@
+<h2 class="text-lg font-semibold ">{{ id ? "Editar" : "Adicionar" }} Pessoa</h2>
+<p class="text-gray-600 mb-4">
+  Preencha os dados para cadastrar uma nova pessoa.
+</p>
+
+<form #f="ngForm" (ngSubmit)="saveUser()">
+  <div>
+    <label for="name" class="block text-sm font-medium  text-gray-700 mb-1">Nome completo</label>
+    <input
+      id="name"
+      type="text"
+      #name="ngModel"
+      name="name"
+      [(ngModel)]="user.name"
+      required
+      placeholder="Digite o nome completo"
+      [disabled]="hideActions"
+      [class.invalid:border-red-300]="name.touched && name.dirty"
+      class="w-full border border-gray-300 placeholder-zinc-500 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+    />
+  </div>
+
+  <div>
+    <label for="cpf" class="block text-sm font-medium  text-gray-700 mb-1">CPF</label>
+    <input
+      id="cpf"
+      type="text"
+      #cpf="ngModel"
+      name="cpf"
+      [(ngModel)]="user.cpf"
+      required
+      placeholder="Digite o CPF"
+      [disabled]="!!id || hideActions"
+      [mask]="!id ? '000.000.000-00' : null"
+      [class.invalid:border-red-300]="name.touched && name.dirty"
+      class="w-full border border-gray-300 placeholder-zinc-500 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+    />
+  </div>
+
+  <div>
+    <label for="email" class="block text-sm font-medium  text-gray-700 mb-1">E-mail</label>
+    <input
+      id="email"
+      type="email"
+      #email="ngModel"
+      name="email"
+      [(ngModel)]="user.email"
+      required
+      placeholder="Digite o e-mail"
+      [disabled]="hideActions"
+      [class.invalid:border-red-300]="email.touched && email.dirty"
+      class="w-full border border-gray-300 placeholder-zinc-500 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+    />
+  </div>
+
+
+  <div>
+    <label for="role" class="block text-sm font-medium  text-gray-700 mb-1">Cargo</label>
+    <ng-select
+      id="role"
+      #role="ngModel"
+      name="role"
+      [class.invalid:border-red-300]="role.touched && role.dirty"
+      required
+      [(ngModel)]="user.role"
+      placeholder="Selecione o cargo"
+      [items]="roles"
+      bindLabel="namePt"
+      bindValue="nameEn"
+      [appendTo]="'body'"
+      [disabled]="hideActions"
+    ></ng-select>
+  </div>
+
+  <div>
+    <label for="username" class="block text-sm font-medium  text-gray-700 mb-1">Login</label>
+    <input
+      id="username"
+      type="text"
+      #username="ngModel"
+      name="username"
+      [(ngModel)]="user.username"
+      required
+      placeholder="Digite o login"
+      [disabled]="!!id || hideActions"
+      [class.invalid:border-red-300]="username.touched && username.dirty"
+      class="w-full border border-gray-300 placeholder-zinc-500 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+    />
+  </div>
+
+  @if (!hideActions){
+    <div>
+      <label for="password" class="block text-sm font-medium  text-gray-700 mb-1">Senha</label>
+      <input
+        id="password"
+        type="password"
+        #password="ngModel"
+        name="password"
+        [(ngModel)]="user.password"
+        [required]="!id"
+        [disabled]="hideActions"
+        [placeholder]="id ? '*******' : 'Digite a senha'"
+        minlength="6"
+        [class.invalid:border-red-300]="password.touched && password.dirty"
+        class="w-full border border-gray-300 placeholder-zinc-500 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <password-strength-meter
+        [minPasswordLength]="6"
+        [password]="password.value"
+        enableFeedback
+      />
+    </div>
+  }
+
+  <div class="flex justify-end mt-4">
+    @if (!hideActions){
+      <button
+        type="submit"
+        [disabled]="!f.valid"
+        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition disabled:bg-indigo-300 disabled:cursor-default"
+      >
+        Salvar Pessoa
+      </button>
+    }
+  </div>
+</form>

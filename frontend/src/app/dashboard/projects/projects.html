@@ -1,0 +1,57 @@
+<div class="p-6 bg-gray-100 min-h-screen">
+  <!-- Header -->
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-900">Projetos</h1>
+    <p class="text-gray-600">Gerencie todos os projetos da organização</p>
+  </div>
+
+  <!-- Novo Projeto Card -->
+  @if (canModify){
+    <div class="mb-6 bg-white shadow rounded-lg p-6 flex items-center justify-between">
+      <h2 class="text-lg font-semibold text-gray-800">Novo Projeto</h2>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition" (click)="openModal('add')">
+        Adicionar
+      </button>
+    </div>
+  }
+
+
+  <!-- Lista de Projetos Tabela -->
+  <div class="bg-white shadow rounded-lg p-6 overflow-x-auto">
+    <h2 class="text-lg font-semibold text-gray-800 mb-4">Lista de Projetos</h2>
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+      <tr>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Nome do Projeto</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Status</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Gerente</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Data Início</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Data Fim</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Ações</th>
+      </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        @for (project of projects; track project.id) {
+          <tr>
+            <td class="px-4 py-2">{{ project.name }}</td>
+            <td class="px-4 py-2">{{ translateStatus(project.status) }}</td>
+            <td class="px-4 py-2">{{ project.manager.name }}</td>
+            <td class="px-4 py-2">{{ project.startDate | date }}</td>
+            <td class="px-4 py-2">{{ project.endDate | date }}</td>
+            <td class="px-4 py-2 space-x-2">
+              <button (click)="openModal('details', project.id)"  class="text-blue-600 hover:underline">Ver</button>
+              @if (canModify){
+                <button (click)="openModal('edit', project.id)"  class="text-blue-600 hover:underline">Editar</button>
+                <button (click)="openModal('delete', project.id)" class="text-red-600 hover:underline">Excluir</button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-modal #modal>
+  <router-outlet></router-outlet>
+</app-modal>
