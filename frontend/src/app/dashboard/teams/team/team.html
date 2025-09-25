@@ -1,0 +1,86 @@
+<h2 class="text-lg font-semibold">{{ id ? "Editar" : "Adicionar" }} Time</h2>
+<p class="text-gray-600 mb-4">
+  Preencha os dados para criar uma nova equipe.
+</p>
+
+<form #f="ngForm" (ngSubmit)="saveProject()">
+  <div>
+    <label for="name" class="block text-sm font-medium  text-gray-700 mb-1">Nome do Time</label>
+    <input
+      id="name"
+      type="text"
+      #name="ngModel"
+      name="name"
+      [(ngModel)]="team.name"
+      required
+      placeholder="Digite o nome da equipe"
+      [disabled]="hideActions"
+      [class.invalid:border-red-300]="name.touched && name.dirty"
+      class="w-full border border-gray-300 placeholder-zinc-500 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-default"
+    />
+  </div>
+
+  <div>
+    <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
+    <textarea
+      id="description"
+      #description="ngModel"
+      name="description"
+      [(ngModel)]="team.description"
+      rows="4"
+      placeholder="Descrição da equipe"
+      [disabled]="hideActions"
+      [class.invalid:border-red-300]="description.touched && description.dirty"
+      class="w-full border border-gray-300 placeholder-zinc-500 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none disabled:bg-gray-100 disabled:cursor-default"
+    ></textarea>
+  </div>
+
+  <div>
+    <label for="members" class="block text-sm font-medium text-gray-700 mb-1">Membros do time</label>
+    <ng-select
+      id="members"
+      #members="ngModel"
+      name="members"
+      [(ngModel)]="team.members"
+      placeholder="Selecione os membros"
+      [class.invalid:border-red-300]="members.touched && members.dirty"
+      [items]="allPeoples"
+      bindLabel="name"
+      bindValue="id"
+      [multiple]="true"
+      [appendTo]="'body'"
+      [disabled]="hideActions"
+    ></ng-select>
+  </div>
+
+  <div>
+    <label for="projects" class="block text-sm font-medium text-gray-700 mb-1">Projetos associados</label>
+    <ng-select
+      id="projects"
+      #projects="ngModel"
+      name="projects"
+      [(ngModel)]="team.projects"
+      placeholder="Associar projetos"
+      [class.invalid:border-red-300]="projects.touched && projects.dirty"
+      [items]="allProjects"
+      bindLabel="name"
+      bindValue="id"
+      [multiple]="true"
+      [appendTo]="'body'"
+      [disabled]="hideActions"
+    ></ng-select>
+  </div>
+
+
+  <div class="flex justify-end mt-4">
+    @if (!hideActions) {
+      <button
+        type="submit"
+        [disabled]="!f.valid"
+        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition disabled:bg-indigo-300 disabled:cursor-default"
+      >
+        Salvar equipe
+      </button>
+    }
+  </div>
+</form>

@@ -1,0 +1,134 @@
+<h2 class="text-lg font-semibold mb-4">{{ id ? "Editar" : "Adicionar" }} Projeto</h2>
+
+<form #f="ngForm" (ngSubmit)="saveProject()">
+  <div>
+    <label for="name" class="block text-sm font-medium  text-gray-700 mb-1">Nome do Projeto</label>
+    <input
+      id="name"
+      type="text"
+      #name="ngModel"
+      name="name"
+      [(ngModel)]="project.name"
+      required
+      placeholder="Digite o nome do projeto"
+      [class.invalid:border-red-300]="name.touched && name.dirty"
+      [disabled]="hideActions"
+      class="w-full border border-gray-300 placeholder-zinc-500 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100
+ disabled:cursor-default"
+    />
+  </div>
+
+  <div>
+    <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
+    <textarea
+      id="description"
+      #description="ngModel"
+      name="description"
+      [(ngModel)]="project.description"
+      rows="4"
+      placeholder="Descrição do projeto"
+      [class.invalid:border-red-300]="description.touched && description.dirty"
+      [disabled]="hideActions"
+      class="w-full border border-gray-300 placeholder-zinc-500 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none disabled:bg-gray-100
+ disabled:cursor-default"
+    ></textarea>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <label for="startDate" class="block text-sm font-medium text-gray-700 mb-1">Data de Início</label>
+      <input
+        id="startDate"
+        type="date"
+        #startDate="ngModel"
+        name="startDate"
+        [(ngModel)]="project.startDate"
+        required
+        [class.invalid:border-red-300]="startDate.touched && startDate.dirty"
+        [disabled]="hideActions"
+        class="w-full border border-gray-300 placeholder-zinc-500 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100
+ disabled:cursor-default"
+      />
+    </div>
+    <div>
+      <label for="endDate" class="block text-sm font-medium text-gray-700 mb-1">Data de Término</label>
+      <input
+        id="endDate"
+        type="date"
+        #endDate="ngModel"
+        name="endDate"
+        [(ngModel)]="project.endDate"
+        [class.invalid:border-red-300]="endDate.touched && endDate.dirty"
+        [disabled]="hideActions"
+        class="w-full border border-gray-300 placeholder-zinc-500 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100
+ disabled:cursor-default"
+      />
+    </div>
+  </div>
+
+  <div>
+    <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+    <ng-select
+      id="status"
+      #status="ngModel"
+      name="status"
+      [class.invalid:border-red-300]="status.touched && status.dirty"
+      required
+      [(ngModel)]="project.status"
+      placeholder="Selecione um status"
+      [items]="statuses"
+      bindLabel="namePt"
+      bindValue="nameEn"
+      [appendTo]="'body'"
+      [disabled]="hideActions"
+    ></ng-select>
+  </div>
+
+  <div>
+    <label for="manager" class="block text-sm font-medium text-gray-700 mb-1">Responsável</label>
+    <ng-select
+      id="manager"
+      #manager="ngModel"
+      name="manager"
+      [(ngModel)]="project.managerId"
+      required
+      placeholder="Selecione o responsável"
+      [class.invalid:border-red-300]="manager.touched && manager.dirty"
+      [items]="managers"
+      bindLabel="name"
+      bindValue="id"
+      [appendTo]="'body'"
+      [disabled]="hideActions"
+    ></ng-select>
+  </div>
+
+  <div>
+    <label for="teams" class="block text-sm font-medium text-gray-700 mb-1">Times</label>
+    <ng-select
+      id="teams"
+      #teams="ngModel"
+      name="teams"
+      [(ngModel)]="project.teams"
+      placeholder="Selecione os times"
+      [class.invalid:border-red-300]="teams.touched && teams.dirty"
+      [items]="allTeams"
+      bindLabel="name"
+      bindValue="id"
+      [multiple]="true"
+      [appendTo]="'body'"
+      [disabled]="hideActions"
+    ></ng-select>
+  </div>
+
+  <div class="flex justify-end mt-4">
+    @if(!hideActions){
+      <button
+        type="submit"
+        [disabled]="!f.valid"
+        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition disabled:bg-indigo-300 disabled:cursor-default"
+      >
+        Salvar Projeto
+      </button>
+    }
+  </div>
+</form>

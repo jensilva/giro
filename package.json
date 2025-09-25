@@ -1,9 +1,0 @@
-{
-  "scripts": {
-    "build": "tsc",
-    "build:watch": "tsc --watch",
-    "serve": "http-server -p 8080 -o",
-    "dev": "npm run build:watch & npm run serve",
-    "start": "npm run build && npm run serve"
-  }
-}
